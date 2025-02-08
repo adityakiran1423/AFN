@@ -1,6 +1,7 @@
 import os
 import csv
 import requests
+
 # import json
 
 from dotenv import load_dotenv
@@ -17,8 +18,8 @@ def extract_movie_name_from_csv():
             movie_name = row[0]
             url = f"https://www.omdbapi.com/?t={movie_name}&plot=full&apikey={OMDB_API_KEY}&"
             response = requests.get(url)
-            json_response = response.json()
-            pruned_ouput = prune_api_response(json_response)
+            # json_response = response.json()
+            pruned_ouput = prune_api_response(response.json())
 
     return pruned_ouput
 
@@ -41,10 +42,10 @@ def prune_api_response(response):
         'Production',
         'Website',
     ]
-    print(len(response))
 
-    print(response)
+    # print(response)
     attributes = [key for key in response]
+
     for i in range(len(response)):
         if attributes[i] in attribute_to_remove_list:
             response.pop(attributes[i])
